@@ -1,4 +1,10 @@
 import Post from '../models/PostSchema.js';
+import { GoogleGenerativeAI } from "@google/generative-ai";
+
+import dotenv from "dotenv";
+dotenv.config();
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+
 
 
 export const createPost = async (req, res) => {
@@ -97,4 +103,44 @@ export const deletePost = async (req, res) => {
     res.status(500).json({ message: 'Server error', error: error.message });
   }
 };
+
+
+
+export const generatePostContent = async (req, res) => {
+  const { title } = req.body;
+
+  if (!title || !title.trim()) {
+    return res.status(400).json({ message: 'Title is required for AI generation' });
+  }
+
+  const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+
+  const prompt =`Write a short and concise blog post (maximum 4 paragraphs) about: ${title}. Keep it under 300 words.`;
+
+  try {
+    const result = await model.generateContent(prompt);
+
+    const response = result.response;
+    const generatedContent = response.text();
+
+    if (!generatedContent) {
+      return res.status(500).json({ message: "Failed to generate content" });
+    }
+
+    const post = await Post.create({
+      title: title.trim(),
+      content: generatedContent,
+      author: req.user._id,
+    });
+
+    return res.status(201).json(post);
+
+  } catch (error) {
+    console.error("AI generation error:", error);
+    return res.status(500).json({ message: "Server error generating content", error: error.message });
+  }
+};
+
+
+
 

@@ -5,6 +5,7 @@ import {
   getMyPosts,
   updatePost,
   deletePost,
+   generatePostContent,
 } from '../controllers/postController.js';
 import protect from '../middleware/authMiddleware.js';
 
@@ -17,5 +18,6 @@ router.get('/my-posts', protect, getMyPosts);
 router.post('/create', protect, createPost);
 router.put('/update/:id', protect, updatePost);
 router.delete('/delete/:id', protect, deletePost);
+router.post('/generate', protect, generatePostContent);
 
 export default router;

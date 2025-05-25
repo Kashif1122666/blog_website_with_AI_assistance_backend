@@ -2,6 +2,8 @@ import User from '../models/userSchema.js';
 import validator from 'validator'
 import bcrypt from 'bcryptjs';
 import generateToken from '../utils/generateToken.js';
+import dotenv from "dotenv";
+dotenv.config();
 
 export const registerUser = async (req, res) => {
   const { name, email, password } = req.body;
