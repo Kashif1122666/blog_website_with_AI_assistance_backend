@@ -1,0 +1,25 @@
+{
+  "name": "blog_website_with_ai_assistance_backend",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/Kashif1122666/blog_website_with_AI_assistance_backend#readme",
+  "bugs": {
+    "url": "https://github.com/Kashif1122666/blog_website_with_AI_assistance_backend/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kashif1122666/blog_website_with_AI_assistance_backend.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+  "dev": "nodemon server.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0"
+  }
+}
